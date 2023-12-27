@@ -8,14 +8,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "user_table")
+@Table(name = "user")
 public class User {
 
     @Id // pk 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
     @Column
@@ -26,9 +26,9 @@ public class User {
 
     public static User toUser(UserDTO userDTO) {
         User user = new User();
-        user.setEmail(userDTO.getUserEmail());
-        user.setPassword(userDTO.getUserPassword());
-        user.setName(userDTO.getUserName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setName(userDTO.getName());
         return user;
     }
 }

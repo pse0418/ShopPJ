@@ -26,6 +26,6 @@ public class UserController {
         System.out.println("UserController.save");
         System.out.println("userDTO = " + userDTO);
         userService.save(userDTO);
-        return "index";
+        return "login";
     }
 }
