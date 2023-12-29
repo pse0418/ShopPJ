@@ -12,10 +12,10 @@ import lombok.Setter;
 public class User {
 
     @Id // pk 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false) // unique, not null
     private String email;
 
     @Column

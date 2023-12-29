@@ -28,4 +28,16 @@ public class UserController {
         userService.save(userDTO);
         return "login";
     }
+
+    @PostMapping("/user/login")
+    public String login(@ModelAttribute UserDTO userDTO) {
+        UserDTO loginResult = userService.login(userDTO);
+        if (loginResult != null) {
+            // login 성공
+            return "main";
+        } else {
+            // login 실패
+            return "login";
+        }
+    }
 }
