@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,5 +47,18 @@ public class UserService {
             // 조회 결과가 없다
             return null;
         }
+    }
+
+    public List<UserDTO> findAll() {
+        List<User> userList = userRepository.findAll();
+        List<UserDTO> userDTOList = new ArrayList<>();
+        for (User user: userList) {
+            userDTOList.add(UserDTO.toUserDTO(user));
+            /*
+            UserDTO userDTO = UserDTO.toUserDTO(user);
+            userDTOList.add(userDTO);
+             */
+        }
+        return userDTOList;
     }
 }

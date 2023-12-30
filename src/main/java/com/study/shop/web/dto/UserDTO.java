@@ -10,9 +10,9 @@ import lombok.*;
 @ToString
 public class UserDTO {
     private Long id;
-    private String Email;
-    private String Password;
-    private String Name;
+    private String email;
+    private String password;
+    private String name;
 
     public static UserDTO toUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
