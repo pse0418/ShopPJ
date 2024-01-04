@@ -57,6 +57,26 @@ public class UserController {
         // html로 가져갈 데이터가 있다면 model 사용
         model.addAttribute("userList", userDTOList);
         return "list";
+    }
 
+    @GetMapping("/user/update")
+    public String updateForm(HttpSession session, Model model) {
+        String myEmail = (String) session.getAttribute("loginEmail");
+        UserDTO userDTO = userService.updateForm(myEmail);
+        model.addAttribute("updateUser", userDTO);
+        return "update";
+    }
+
+    @PostMapping("/user/update")
+    public String update(@ModelAttribute UserDTO userDTO) {
+        userService.update(userDTO);
+        return "main";
+        //return "redirect:/user/" + userDTO.getId();
+    }
+
+    @GetMapping("/user/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "index";
     }
 }

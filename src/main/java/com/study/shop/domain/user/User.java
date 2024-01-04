@@ -31,4 +31,13 @@ public class User {
         user.setName(userDTO.getName());
         return user;
     }
+
+    public static User toUpdateUser(UserDTO userDTO) {
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setName(userDTO.getName());
+        return user;
+    }
 }

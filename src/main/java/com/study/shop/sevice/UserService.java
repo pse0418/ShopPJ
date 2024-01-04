@@ -61,4 +61,17 @@ public class UserService {
         }
         return userDTOList;
     }
+
+    public UserDTO updateForm(String myEmail) {
+        Optional<User> optionalUser = userRepository.findByEmail(myEmail);
+        if (optionalUser.isPresent()) {
+            return UserDTO.toUserDTO(optionalUser.get());
+        } else {
+            return null;
+        }
+    }
+
+    public void update(UserDTO userDTO) {
+        userRepository.save(User.toUpdateUser(userDTO));
+    }
 }

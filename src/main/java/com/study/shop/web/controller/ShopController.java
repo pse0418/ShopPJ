@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ShopController {
 
-    @GetMapping("/") //localhost:8080/shop/login
+    @GetMapping("/") //localhost:8080/
     public String index() {
         return "index";
     }
