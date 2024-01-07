@@ -4,10 +4,15 @@ import com.study.shop.web.dto.ItemDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
 @Setter
+//@DynamicInsert
+//@DynamicUpdate
 @Table(name = "item")
 public class Item {
     @Id // pk 지정
@@ -30,14 +35,13 @@ public class Item {
     @Column
     private Integer viewCount;
 
-
     public static Item toItem(ItemDTO itemDTO) {
         Item item = new Item();
         item.setItemNm(itemDTO.getItemNm());
         item.setPrice(itemDTO.getPrice());
         item.setStockNumber(itemDTO.getStockNumber());
         item.setItemDetail(itemDTO.getItemDetail());
-        item.setViewCount(itemDTO.getViewCount());
+        item.setViewCount(0);
         return item;
     }
 
@@ -50,5 +54,4 @@ public class Item {
         item.setItemDetail(itemDTO.getItemDetail());
         return item;
     }
-
 }

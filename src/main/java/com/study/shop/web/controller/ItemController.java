@@ -40,6 +40,7 @@ public class ItemController {
 
     @GetMapping("/item/{id}")
     public String findById(@PathVariable Long id, Model model) {
+        itemService.updateViewCount(id);
         ItemDTO itemDTO = itemService.findById(id);
         model.addAttribute("item", itemDTO);
         return "itemDetail";
