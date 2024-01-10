@@ -5,6 +5,10 @@ import com.study.shop.domain.item.ItemRepository;
 import com.study.shop.web.dto.ItemDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -64,5 +68,16 @@ public class ItemService {
     @Transactional
     public void updateViewCount(Long id) {
         itemRepository.updateViewCount(id);
+    }
+
+    public Page<ItemDTO> paging(Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;    // page는 0부터, 사용자가 보는 첫페이지는 1이기 때문에
+        int pageLimit = 2;  //한 페이지에 보여줄 글 갯수
+        // 한페이지당 2개를 보여주고 조회수롤 내림차순 정렬
+        Page<Item> items =
+        itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "viewCount")));
+
+        Page<ItemDTO> itemDTOS = items.map(item -> new ItemDTO(item.getId(), item.getItemNm(), item.getPrice(), item.getViewCount()));
+        return itemDTOS;
     }
 }

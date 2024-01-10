@@ -18,6 +18,13 @@ public class ItemDTO {
     private String itemDetail;	// 상품 상세 설명
     private Integer viewCount;	// 상품 조회수
 
+    public ItemDTO(Long id, String itemNm, Integer price, Integer viewCount) {
+        this.id = id;
+        this.itemNm = itemNm;
+        this.price = price;
+        this.viewCount = viewCount;
+    }
+
     public static ItemDTO toItemDTO(Item item) {
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setId(item.getId());

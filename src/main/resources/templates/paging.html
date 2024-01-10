@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>paging</title>
+</head>
+<body>
+<table>
+  <tr>
+      <th>id</th>
+      <th>name</th>
+    <th>price</th>
+    <th>viewCount</th>
+  </tr>
+  <tr th:each="item: ${itemList}">
+      <td th:text="${item.id}"></td>
+      <td><a th:href="@{|/item/${item.id}|(page=${itemList.number + 1})}" th:text="${item.itemNm}"></a></td>
+      <td th:text="${item.price}"></td>
+      <td th:text="${item.viewCount}"></td>
+  </tr>
+</table>
+<!-- 첫번째 페이지로 이동 -->
+<a th:href="@{/item/paging(page=1)}">First</a>
+<!-- 이전 링크 활성화 비활성화 -->
+<a th:href="${itemList.first} ? '#' : @{/item/paging(page=${itemList.number})}">prev</a>
+
+<!-- 페이지 번호 링크(현재 페이지는 숫자만)
+        for(int page=startPage; page<=endPage; page++)-->
+<span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+<!-- 현재페이지는 링크 없이 숫자만 -->
+    <span th:if="${page == itemList.number + 1}" th:text="${page}"></span>
+  <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
+    <span th:unless="${page == itemList.number + 1}">
+        <a th:href="@{/item/paging(page=${page})}" th:text="${page}"></a>
+    </span>
+</span>
+
+<!-- 다음 링크 활성화 비활성화
+    사용자: 2페이지, getNumber: 1, 3페이지-->
+<a th:href="${itemList.last} ? '#' : @{/item/paging(page=${itemList.number + 2})}">next</a>
+<!-- 마지막 페이지로 이동 -->
+<a th:href="@{/item/paging(page=${itemList.totalPages})}">Last</a>
+
+</body>
+</html>
