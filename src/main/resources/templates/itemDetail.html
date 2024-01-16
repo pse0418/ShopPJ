@@ -19,10 +19,20 @@
         <td th:text="${item.id}"></td>
         <td th:text="${item.itemNm}"></td>
         <td th:text="${item.price}"></td>
-        <td th:text="${item.stockNumber}"></td>
+        <td th:text="${item.number}"></td>
         <td th:text="${item.itemDetail}"></td>
         <td th:text="${item.viewCount}"></td>
     </tr>
 </table>
+<form class="d-flex" th:action="@{/cart/{id}/{itemId}(id=${user.id}, itemId=${item.id})}" method="post">
+    <div class="d-flex">
+        <input class="form-control text-center me-3" id="amount" name="amount" type="num" value="1"
+               style="max-width: 3rem"/>
+        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+            <i class="bi-cart-fill me-1"></i>
+            장바구니
+        </button>
+    </div>
+</form>
 </body>
 </html>

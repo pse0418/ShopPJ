@@ -17,4 +17,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Modifying
     @Query("update Item i set i.viewCount = i.viewCount+1 where i.id=:id")
     void updateViewCount(@Param("id")Long id);
+
+    Item findItemById(Long id);
 }

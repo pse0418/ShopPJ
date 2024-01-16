@@ -1,5 +1,7 @@
 package com.study.shop.domain.item;
 
+import com.study.shop.domain.cart.CartItem;
+import com.study.shop.domain.user.User;
 import com.study.shop.web.dto.ItemDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,6 +9,9 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +39,13 @@ public class Item {
 
     @Column
     private Integer viewCount;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user; // 판매자 아이디
+
+    @OneToMany(mappedBy = "item")
+    private List<CartItem> cart_items = new ArrayList<>();
 
     public static Item toItem(ItemDTO itemDTO) {
         Item item = new Item();
