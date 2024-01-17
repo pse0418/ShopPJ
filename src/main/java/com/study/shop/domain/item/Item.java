@@ -49,6 +49,7 @@ public class Item {
 
     public static Item toItem(ItemDTO itemDTO) {
         Item item = new Item();
+        item.setId(itemDTO.getId());
         item.setItemNm(itemDTO.getItemNm());
         item.setPrice(itemDTO.getPrice());
         item.setStockNumber(itemDTO.getStockNumber());

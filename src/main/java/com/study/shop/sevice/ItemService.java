@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ItemService {
 
-    private static final ItemRepository itemRepository = null;
+    private final ItemRepository itemRepository;
 
     public void save(ItemDTO itemDTO) {
         Item item = Item.toItem(itemDTO);
@@ -53,7 +53,7 @@ public class ItemService {
         itemRepository.deleteById(id);
     }
 
-    public static ItemDTO findById(Long id) {
+    public ItemDTO findById(Long id) {
         Optional<Item> optionalItem = itemRepository.findById(id);  // 옵셔널 객체를
         if (optionalItem.isPresent()) {
         /*  Item item = optionalItem.get();                         // get으로 받아야 entity객체가 보이고

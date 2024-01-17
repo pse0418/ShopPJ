@@ -13,31 +13,39 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CartService {
     private final CartRepository cartRepository;
     private final ItemRepository itemRepository;
     private final CartItemRepository cartItemRepository;
-//
-//    public void save(CartDTO cartDTO) {
-//        Cart cart = Cart.toCart(cartDTO);
-//        cartRepository.save(cart);
-//    }
 
-    @Transactional
+    public void save(CartDTO cartDTO) {
+        Cart cart = Cart.toCart(cartDTO);
+        cartRepository.save(cart);
+    }
+
     public void addCart(User user, Item newItem, int amount) {
         // 유저 id로 해당 유저의 장바구니 찾기
         Cart cart = cartRepository.findByUserId(user.getId());
+        System.out.println(user.getId());
 
         // 장바구니가 존재하지 않는다면
         if (cart == null) {
+            System.out.println("2");
             cart = Cart.createCart(user);
+
+            System.out.println("3");
             cartRepository.save(cart);
+            System.out.println("4");
         }
 
+        System.out.println("5");
         Item item = itemRepository.findItemById(newItem.getId());
 
         CartItem cartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
@@ -60,5 +68,14 @@ public class CartService {
 
         // 카트 상품 총 개수 증가
         cart.setCount(cart.getCount()+amount);
+    }
+
+    public List<CartDTO> findByUserId(Long id) {
+        List<Cart> cartList = (List<Cart>) cartRepository.findByUserId(id);
+        List<CartDTO> cartDTOList = new ArrayList<>();
+        for (Cart cart: cartList) {
+            cartDTOList.add(CartDTO.toCartDTO(cart));
+        }
+            return cartDTOList;
     }
 }

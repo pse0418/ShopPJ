@@ -43,7 +43,7 @@ public class UserController {
         UserDTO loginResult = userService.login(userDTO);
         if (loginResult != null) {
             // login 성공
-            session.setAttribute("loginEmail", loginResult.getEmail());
+            session.setAttribute("loginId", loginResult.getId());
             return "main";
         } else {
             // login 실패

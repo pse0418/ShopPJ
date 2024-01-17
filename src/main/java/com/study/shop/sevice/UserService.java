@@ -17,7 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
 
-    private static final UserRepository userRepository = null;
+    @Autowired
+    private UserRepository userRepository;
 
     public void save(UserDTO userDTO) {
         // 1. dto -> entity 변환
@@ -61,6 +62,7 @@ public class UserService {
             userDTOList.add(userDTO);
              */
         }
+
         return userDTOList;
     }
 
@@ -77,7 +79,7 @@ public class UserService {
         userRepository.save(User.toUpdateUser(userDTO));
     }
 
-    public static UserDTO findById(Long id) {
+    public UserDTO findById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);  // 옵셔널 객체를
         if (optionalUser.isPresent()) {                                     // 컨트롤러에 보내준다   */
             return UserDTO.toUserDTO(optionalUser.get());       // 윗 세줄을 한줄로 표현

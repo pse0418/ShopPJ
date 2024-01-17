@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Cart<CartItem> {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,13 +25,14 @@ public class Cart<CartItem> {
 
     private Integer count;  // 담긴 총 상품 수
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.PERSIST)
     private List<CartItem> cartItems = new ArrayList<>();
 
     public static Cart createCart(User user) {
         Cart cart = new Cart();
         cart.setCount(0);
         cart.setUser(user);
+
         return cart;
     }
 
