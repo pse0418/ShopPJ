@@ -12,7 +12,7 @@
     <th>email</th>
     <th>password</th>
     <th>name</th>
-    <th>상세조회</th>
+<!--    <th>상세조회</th>-->
     <th>삭제</th>
   </tr>
   <tr th:each="user: ${userList}">
@@ -20,11 +20,11 @@
     <td th:text="${user.email}"></td>
     <td th:text="${user.password}"></td>
     <td th:text="${user.name}"></td>
-    <td>
-      <!-- query string /user?id=1
-          rest api /user/1 -->
-      <a th:href="@{|/user/${user.id}|}">조회</a>
-    </td>
+<!--    <td>-->
+<!--      &lt;!&ndash; query string /user?id=1-->
+<!--          rest api /user/1 &ndash;&gt;-->
+<!--      <a th:href="@{|/user/${user.id}|}">조회</a>-->
+<!--    </td>-->
     <td>
       <a th:href="@{|/user/delete/${user.id}|}">삭제</a>
     </td>

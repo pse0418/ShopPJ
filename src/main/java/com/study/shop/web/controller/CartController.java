@@ -6,6 +6,7 @@ import com.study.shop.sevice.CartService;
 import com.study.shop.sevice.ItemService;
 import com.study.shop.sevice.UserService;
 import com.study.shop.web.dto.CartDTO;
+import com.study.shop.web.dto.CartItemDTO;
 import com.study.shop.web.dto.ItemDTO;
 import com.study.shop.web.dto.UserDTO;
 import jakarta.servlet.http.HttpSession;
@@ -33,10 +34,13 @@ public class CartController {
 //    }
 
     @GetMapping("/cart")
-    public String findByUserId(Model model, HttpSession session) {
+    public String findAllByCart(Model model, HttpSession session) {
         Long id = (Long)session.getAttribute("loginId");
-        List<CartDTO> cartDTOList = cartService.findByUserId(id);
-        model.addAttribute("cartList", cartDTOList);
+
+        User user = User.toUpdateUser(userService.findById(id));
+        List<CartItemDTO> cartItemDTOList = cartService.findAllByCart(user);
+        
+        model.addAttribute("cartItemList", cartItemDTOList);
         return "cartList";
     }
 
@@ -50,8 +54,6 @@ public class CartController {
         User user = User.toUpdateUser(userService.findById(id));
         Item item = Item.toItem(itemService.findById(itemId));
 
-
-        System.out.println(user.getId());
         cartService.addCart(user, item, amount);
 
         return "redirect:/item/";

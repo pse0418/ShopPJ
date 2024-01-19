@@ -8,12 +8,14 @@ import com.study.shop.domain.item.Item;
 import com.study.shop.domain.item.ItemRepository;
 import com.study.shop.domain.user.User;
 import com.study.shop.web.dto.CartDTO;
+import com.study.shop.web.dto.CartItemDTO;
 import com.study.shop.web.dto.ItemDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,19 +35,14 @@ public class CartService {
     public void addCart(User user, Item newItem, int amount) {
         // 유저 id로 해당 유저의 장바구니 찾기
         Cart cart = cartRepository.findByUserId(user.getId());
-        System.out.println(user.getId());
 
         // 장바구니가 존재하지 않는다면
         if (cart == null) {
-            System.out.println("2");
             cart = Cart.createCart(user);
 
-            System.out.println("3");
             cartRepository.save(cart);
-            System.out.println("4");
         }
 
-        System.out.println("5");
         Item item = itemRepository.findItemById(newItem.getId());
 
         CartItem cartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
@@ -70,12 +67,19 @@ public class CartService {
         cart.setCount(cart.getCount()+amount);
     }
 
-    public List<CartDTO> findByUserId(Long id) {
-        List<Cart> cartList = (List<Cart>) cartRepository.findByUserId(id);
-        List<CartDTO> cartDTOList = new ArrayList<>();
-        for (Cart cart: cartList) {
-            cartDTOList.add(CartDTO.toCartDTO(cart));
+    public List<CartItemDTO> findAllByCart(User user) {
+        Cart cart = cartRepository.findByUserId(user.getId());
+
+//        user(userid, ~~)
+//        cart(userid, cartid, count)
+//        cartitem(cartid, userid, itemid, count)
+
+        List<CartItem> cartItemList = cartItemRepository.findAllByCartId(cart.getId());
+        List<CartItemDTO> cartItemDTOList = new ArrayList<>();
+        for (CartItem cartItem: cartItemList) {
+            cartItemDTOList.add(CartItemDTO.toCartItemDTO(cartItem));
         }
-            return cartDTOList;
+
+        return cartItemDTOList;
     }
 }

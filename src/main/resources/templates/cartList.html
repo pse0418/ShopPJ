@@ -11,9 +11,9 @@
         <th>itemId</th>
         <th>count</th>
     </tr>
-    <tr th:each="cart: ${cartList}">    <!--반복문-->
-        <td th:text="${cart.id}"></td>
-        <td th:text="${cart.count}"></td>
+    <tr th:each="cartItem: ${cartItemList}">    <!--반복문-->
+        <td th:text="${cartItem.item.id}"></td>
+        <td th:text="${cartItem.count}"></td>
     </tr>
 </table>
 </body>

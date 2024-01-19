@@ -61,8 +61,8 @@ public class UserController {
 
     @GetMapping("/user/update")
     public String updateForm(HttpSession session, Model model) {
-        String myEmail = (String) session.getAttribute("loginEmail");
-        UserDTO userDTO = userService.updateForm(myEmail);
+        Long myId = (Long) session.getAttribute("loginId");
+        UserDTO userDTO = userService.updateForm(myId);
         model.addAttribute("updateUser", userDTO);
         return "update";
     }
